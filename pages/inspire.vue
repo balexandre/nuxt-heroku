@@ -15,8 +15,9 @@
       <v-row>
         <v-col>
           <v-btn @click.stop="fetchPostsByUser">Fetch Posts for User #1</v-btn>
-          <v-btn @click.stop="fetchUsers">Fetch All Users</v-btn></v-col
-        ></v-row
+          <v-btn @click.stop="fetchUsers">Fetch All Users</v-btn>
+          <v-chip class="caption">{{ environmentVariable }}</v-chip>
+        </v-col></v-row
       >
       <hr />
       <v-row
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       code: null,
-      loading: false
+      loading: false,
+      environmentVariable: process.env.ENV_APP_NAME || '?'
     }
   },
   methods: {
