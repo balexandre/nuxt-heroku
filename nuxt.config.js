@@ -52,6 +52,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  serverMiddleware: ['~/api/index.js'],
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
