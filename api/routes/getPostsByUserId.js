@@ -4,7 +4,9 @@ const axios = require('axios')
 const logger = require('./../utilities/logger')
 
 const getPostsByUserId = async (req, res) => {
-  const url = `https://jsonplaceholder.typicode.com/posts?userId=${req.params.user_id}`
+  const name = process.env.ENV_APP_NAME || '?'
+  const url = `https://jsonplaceholder.typicode.com/posts?userId=${req.params.user_id}&name=${name}`
+  logger.log('calling external resource', url)
 
   try {
     const response = await axios.get(url)

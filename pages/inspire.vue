@@ -14,8 +14,22 @@
       <hr />
       <v-row>
         <v-col>
-          <v-btn @click.stop="fetchPostsByUser">Fetch Posts for User #1</v-btn>
-          <v-btn @click.stop="fetchUsers">Fetch All Users</v-btn>
+          <v-chip class="caption">Using fetch()</v-chip>
+          <v-btn @click.stop="FETCH_fetchPostsByUser"
+            >Fetch Posts for User #1</v-btn
+          >
+          <v-btn @click.stop="FETCH_fetchUsers">Fetch All Users</v-btn>
+          <v-chip class="caption">{{ environmentVariable }}</v-chip>
+        </v-col></v-row
+      >
+      <hr />
+      <v-row>
+        <v-col>
+          <v-chip class="caption">Using axios()</v-chip>
+          <v-btn @click.stop="AXIOS_fetchPostsByUser"
+            >Fetch Posts for User #1</v-btn
+          >
+          <v-btn @click.stop="AXIOS_fetchUsers">Fetch All Users</v-btn>
           <v-chip class="caption">{{ environmentVariable }}</v-chip>
         </v-col></v-row
       >
@@ -31,6 +45,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -40,28 +56,50 @@ export default {
     }
   },
   methods: {
-    fetchPostsByUser() {
-      this.callBackendApi('/api/user/1/posts')
+    FETCH_fetchPostsByUser() {
+      this.callBackendApi('/api/user/1/posts', 'fetch')
     },
-    fetchUsers() {
-      this.callBackendApi('/api/users')
+    FETCH_fetchUsers() {
+      this.callBackendApi('/api/users', 'fetch')
     },
-    callBackendApi(url) {
+    AXIOS_fetchPostsByUser() {
+      this.callBackendApi('/api/user/1/posts', 'axios')
+    },
+    AXIOS_fetchUsers() {
+      this.callBackendApi('/api/users', 'axios')
+    },
+    callBackendApi(url, framework) {
       const _ = this
 
       this.loading = true
-      fetch(url)
-        .then((res) => res.json())
-        .then((json) => {
-          _.code = json
-          _.loading = false
-        })
-        .catch((err) => {
-          _.code = err.message + '\n\n' + err.stack
-          _.loading = false
-          // eslint-disable-next-line no-console
-          console.error(err)
-        })
+      if (framework === 'fetch') {
+        fetch(url)
+          .then((res) => res.json())
+          .then((json) => {
+            _.code = json
+            _.loading = false
+          })
+          .catch((err) => {
+            _.code = err.message + '\n\n' + err.stack
+            _.loading = false
+            // eslint-disable-next-line no-console
+            console.error(err)
+          })
+      } else {
+        // axios
+        axios
+          .get(url)
+          .then((res) => {
+            _.code = res.data
+            _.loading = false
+          })
+          .catch((err) => {
+            _.code = err.message + '\n\n' + err.stack
+            _.loading = false
+            // eslint-disable-next-line no-console
+            console.error(err)
+          })
+      }
     }
   }
 }
