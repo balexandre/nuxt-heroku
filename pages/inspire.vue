@@ -34,10 +34,24 @@
         </v-col></v-row
       >
       <hr />
+      <v-row>
+        <v-col>
+          <v-chip class="caption">Using Vuex Store</v-chip>
+          <v-btn @click.stop="STORE_fetchPostsByUser(1)"
+            >Fetch Posts for User #1</v-btn
+          >
+          <v-btn @click.stop="STORE_fetchUsers">Fetch All Users</v-btn>
+          <v-chip class="caption">{{ environmentVariable }}</v-chip>
+        </v-col></v-row
+      >
+      <hr />
       <v-row
         ><v-col>
-          <p v-if="loading">fetching data...</p>
-          <pre v-else class="text-left">{{ code }}</pre></v-col
+          <p v-if="loading === true || getLoading() === true">
+            fetching data...
+          </p>
+          <pre v-else-if="code" class="text-left">{{ code }}</pre>
+          <pre v-else class="text-left">{{ getData() }}</pre></v-col
         ></v-row
       >
     </v-flex>
@@ -45,6 +59,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import axios from 'axios'
 
 export default {
@@ -56,6 +71,18 @@ export default {
     }
   },
   methods: {
+    ...mapGetters({
+      getLoading: 'axios/getLoading',
+      getData: 'axios/getData'
+    }),
+    STORE_fetchPostsByUser() {
+      this.code = null
+      this.$store.dispatch('axios/fetchPostsByUserId', 1)
+    },
+    STORE_fetchUsers() {
+      this.code = null
+      this.$store.dispatch('axios/fetchUsers')
+    },
     FETCH_fetchPostsByUser() {
       this.callBackendApi('/api/user/1/posts', 'fetch')
     },
