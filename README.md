@@ -1,6 +1,8 @@
 # nuxt-heroku-test
 
-> My fantabulous Nuxt.js project
+- using custom `serverMiddleware` and using `fetch()`, `axios()` and even `Vuex` actions to testing the Nuxt application to fetch data inside Heroku
+
+- trying ways to fetch `process.env.XXXXX` into the app
 
 ## Build Setup
 
