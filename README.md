@@ -4,6 +4,8 @@
 
 - trying ways to fetch `process.env.XXXXX` into the app
 
+app is live on [https://ba-nuxt-heroku-test.herokuapp.com/inspire](https://ba-nuxt-heroku-test.herokuapp.com/inspire), just use the buttons and check the source code (app is hosted on a Free account, that will sleep after no request in 30min... will take 15sec to became available...)
+
 ## Build Setup
 
 ``` bash
