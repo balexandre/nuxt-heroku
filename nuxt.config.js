@@ -2,6 +2,9 @@ const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   mode: 'universal',
+  env: {
+    ENV_APP_NAME: process.env.ENV_APP_NAME || 'env-not-loaded'
+  },
   /*
    ** Headers of the page
    */
